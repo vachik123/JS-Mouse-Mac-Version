@@ -1,0 +1,72 @@
+Item	Voice	Headline	Pres List	Recall List	(Act/Pass Similarity)	Edited, controlled stimuli
+T1_Act	Active	Rat infestation forces busy supermarket to shut as inspection finds 'poor hygiene levels'	A	1		Health inspection that found rat infestation forces busy supermarket in Surrey to shut
+T1_Pass	Passive	Busy supermarket forced to close amid speculation over 'rat infestation'	B	2		Busy supermarket in Surrey forced to shut after health inspection found rat infestation
+T2_Act	Active	Car crash kills nearly 40 sheep near Lovelock	A	1		Car crash caused by inattentive driver kills nearly 40 sheep near Lovelock
+T2_Pass	Passive	Nearly 40 sheep killed in Lovelock car crash, driver suspected of inattention	B	2		Nearly 40 sheep killed in car crash caused by inattentive driver near Lovelock
+T3_Act	Active	Oregon man claims Powerball jackpot prize of $328.5 million	A	1		Elated Oregon man claims Powerball jackpot prize of $330 million
+T3_Pass	Passive	Oregon man revealed as winner of $328.5 million Powerball jackpot in January	B	2		Powerball jackpot prize of $330 million claimed by elated Oregon man
+T4_Act	Active	Fire in Pennsylvania displaces 15 people, injures 5 including 2 firefighters and 2 paramedics	A	1		Fire damaging six homes in Allentown, Pennsylvania displaces 30 people and 5 pets
+T4_Pass	Passive	30 people, 5 pets displaced after fire damages six homes in Allentown	B	2		30 people and 5 pets displaced by fire damaging six homes in Allentown, Pennsylvania
+T5_Act	Active	Scientists discover shocking find where Bible says Moses parted Red Sea	A	1		Scientists make a shocking deep sea discovery in area where Bible says Moses parted Red Sea
+T5_Pass	Passive	Shocking deep sea discovery made in area where Bible says Moses parted Red Sea	B	2		Shocking deep sea discovery made by scientists in area where Bible says Moses parted Red Sea
+T6_Act	Active	Thieves steal 100,000 eggs from trailer in Pennsylvania as prices spike	A	2		Thieves steal 100,000 eggs from trailer in rural Pennsylvania as prices spike
+T6_Pass	Passive	100,000 eggs were stolen from a trailer in Pennsylvania, police say	B	1		100,000 eggs stolen by thieves from trailer in rural Pennsylvania as prices spike
+T7_Act	Active	Gordon Ramsay's restaurant loses nearly 500 lucky cat figurines to theft	A	2		Anonymous fans remove 500 cat figurines from Gordon Ramsay’s Lucky Cat Restaurant
+T7_Pass	Passive	Almost 500 cat figurines stolen from Gordon Ramsay’s Lucky Cat Restaurant	B	1		500 cat figurines removed from Gordon Ramsay’s Lucky Cat Restaurant by anonymous fans
+T8_Act	Active	Pet monkey jumps through drive-thru window and attacks Starbucks worker, AL cops say	A	2		Pet monkey attacks Alabama Starbucks employee in drive-thru
+T8_Pass	Passive	Alabama Starbucks employee attacked by pet monkey in drive-thru	B	1		Alabama Starbucks employee attacked by pet money in drive-thru
+T9_Act	Active	Grate cheese robbery': British police make arrest in theft of rare $390,000 cheddar	A	2		British police arrest UK man in theft of $389,000 worth of rare cheddar
+T9_Pass	Passive	Man arrested in U.K. cheese heist where imposter stole $389,000 worth of cheddar	B	1		UK man arrested by British police in theft of $389,000 worth of rare cheddar
+T10_Act	Active	The ban on beards in the Yankees’ clubhouse has been tossed	A	2		Yankees’ general manager tosses ban on beards after 49 years
+T10_Pass	Passive	New York Yankees drop beard ban after 49 years	B	1		Ban on beards tossed by Yankees’ general manager after 49 years
+T11_Act	Active	Archaeologists uncover ancient 'city of the dead' in Italy: 'Perfectly preserved'	B	1		Archaeologists unearth 200 perfectly preserved tombs in ancient 'city of the dead' in Italy
+T11_Pass	Passive	"Monumental necropolis" of 200 ancient tombs unearthed by archaeologists in Italy	A	2		200 perfectly preserved tombs unearthed by archaeologists in ancient 'city of the dead' in Italy
+T12_Act	Active	Police arrest alleged leader of anarchist vegan cult tied to series of crimes, including CBP agent murder	B	1		Police arrest alleged leader of anarchist vegan cult after reports of crimes and deaths across America
+T12_Pass	Passive	Tech genius' leader of vegan trans cult is arrested linked to six deaths across America	A	2		Alleged leader of anarchist vegan cult arrested by police after reports of crimes and deaths across America
+T13_Act	Active	Trump fires hundreds of FAA workers weeks after deadly DCA plane crash	B	1		Trump administration fires hundreds of FAA workers after DC plane crash
+T13_Pass	Passive	Hundreds of FAA employees fired by Trump administration weeks after midair DC collision	A	2		Hundreds of FAA workers fired by Trump administration after DC plane crash
+T14_Act	Active	China fumes at Trump for Taiwan-friendly change at State Department: ‘Severe damage’	B	1		State Department officials angers China after Taiwan-friendly change in policy wording
+T14_Pass	Passive	China outraged after Trump State Department deletes key phrase on Taiwan relations	A	2		China angered by State Department officials after Taiwan-friendly change in policy wording
+T15_Act	Active	Trump administration orders consumer protection agency to stop work	B	1		Trump administration orders consumer protection agency to stop work
+T15_Pass	Passive	Consumer watchdog ordered to stop fighting financial abuse and to work from home as HQ temporarily shuts down	A	2		Consumer protection agency ordered to stop work by Trump administration
+T16_Act	Active	Delta flight flips over in Toronto, injuring 18 people	B	2		Overturned Delta airplane injures 18 people on runway in Toronto
+T16_Pass	Passive	18 people injured after Delta plane landing at Toronto airport overturns	A	1		18 people injured by overturned Delta airplane on runway in Toronto
+T17_Act	Active	Several Trump administration picks face bomb threats and ‘swatting’	B	2		Fuming online protesters target several top administration picks with bomb threats
+T17_Pass	Passive	Trump cabinet picks targeted with bomb threats	A	1		Several top administration picks targeted with bomb threats by fuming online protesters
+T18_Act	Active	Mexico threatens to sue Google over name change of Gulf of Mexico on US maps	B	2		Mexico threatens Google with lawsuit over Gulf of Mexico name change
+T18_Pass	Passive	Google warned of lawsuit over ‘Gulf of Mexico’ name change	A	1		Google threatened by Mexico with lawsuit over Gulf of Mexico name change
+T19_Act	Active	U.S. conditionally approves vaccine to protect poultry from bird flu	B	2		USDA conditionally approves bird flu vaccine to protect poultry
+T19_Pass	Passive	Bird flu vaccine conditionally approved, unlikely to be used commercially	A	1		Bird flu vaccine conditionally approved by USDA to protect poultry
+T20_Act	Active	JD Vance stuns Munich conference with blistering attack on Europe’s leaders	B	2		JD Vance's speech stuns European leaders at Munich conference
+T20_Pass	Passive	European leaders, media stunned by JD Vance's speech	A	1		European leaders stunned by JD Vance's speech at Munich conference
+x	x	x	x	x
+Inf1	--	Trump to sign executive order on disaster relief on Monday	A,B	1,2
+Inf2	--	Natalya To Release "The Last Hart Beating" Memoir In October	A,B	1,2
+Inf3	--	Former Police Chief Paul Prine to announce Mobile mayoral candidacy	A,B	1,2
+Inf4	--	Shohei Ohtani to become first MLB player to appear in Fortnite Icon Series	A,B	--
+Inf5	--	Virginia expected to hire former VCU coach Ryan Odom to lead Cavaliers	A,B	--
+Inf6	--	Dollar General to close nearly 100 stores throughout the US. Here are the Delaware locations	--	1,2
+Inf7	--	Paris Baguette in Fresno to soft open this weekend	--	1,2
+Qus1	--	Does an Atlantic City casino owe you money? What to know about $45 million MGM settlement	A,B	1,2
+Qus2	--	Who is Sudiksha Konanki? What to know about American college student's disappearance in Dominican Republic	A,B	1,2
+Qus3	--	What is a recession? What does one mean for you? Here's what to know	A,B	--
+Qus4	--	Voting in Massachusetts? Here’s what to know about the 5 ballot measures	A,B	--
+Qus5	--	Are you stretching correctly? Fitness experts break down what to do pre- and post-workout 	A,B
+Qus6	--	Is it time for divorce? Therapists and attorneys weigh in	--	1,2
+Qus7	--	How often should you shower? 5 things to know from a doctor 	--	1,2
+Qus8	--	Is dementia incidence still dropping? Birth cohort data say yes	--	1,2
+FR1	--	What we know about the House GOP government funding bill	A,B	1,2
+FR2	--	What we know about Southwest reversing its free checked back policy	A,B	1,2
+FR3	--	What we know about Gene Hackman's Death	A,B	--
+FR4	--	What we know about the oil tanker and cargo vessel collision	A,B	--
+FR5	--	What to know about Anchorage’s 2025 city election	A,B	--
+FR6	--	What to Know About the Blood Moon Lunar Eclipse	--	1,2
+FR7	--	What to know about Mark Carney, Canada's next prime minister	--	1,2
+FR8	--	What to Know About Jay Bhattacharya, Trump's Pick to Lead the NIH	--	1,2
+NP1	--	The Unusual Biden-Trump Continuity in One Area	A,B	1,2
+NP2	--	The chilling effect of Trump’s war against the legal establishment 	A,B	1,2
+NP3	--	The potential dangers of sleep trackers, according to experts 	A,B	1,2
+NP4	--	The 4 types of headaches you should never ignore, according to a neurologist	A,B	--
+NP5	--	The 5 best cheeses you should be eating for weight loss, according to dietitians	A,B	--
+NP6	--	The Blue State Power Index	--	1,2
+NP7	--	The Wisconsin Court Election Drawing Elon Musk’s Money	--	1,2
