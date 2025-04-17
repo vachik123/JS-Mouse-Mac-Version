@@ -1,0 +1,160 @@
+<script type="text/javascript">
+// Create global controller
+if (!window.autoAdvanceController) {
+    window.autoAdvanceController = {
+        activeTimers: {},
+        questionStates: {},
+        activePage: null,
+        lastTransitionTime: 0,
+        
+        // when a question loads
+        setupQuestion: function(questionId, questionAPI) {
+            // record this trans time
+            this.lastTransitionTime = new Date().getTime();
+            
+            // prevent double init
+            if (this.questionStates[questionId]) {
+                console.log("[Controller] Already set up question: " + questionId);
+                return;
+            }
+            
+            console.log("[Controller] Setting up question: " + questionId);
+            
+            // mark this as the active page
+            this.activePage = questionId;
+            
+            this.questionStates[questionId] = {
+                hasAdvanced: false,
+                questionAPI: questionAPI,
+                loadTime: new Date().getTime()
+            };
+            
+            // hide next button
+            questionAPI.hideNextButton();
+            
+            // clear all timers, not just for this Q
+            this.clearAllTimers();
+            
+            // page submit handler
+            var controller = this;
+            Qualtrics.SurveyEngine.addOnPageSubmit(function() {
+                console.log("[Controller] Page submit detected for question: " + questionId);
+                // mark this trans
+                controller.lastTransitionTime = new Date().getTime();
+                
+                // mark question as advanced
+                if (controller.questionStates[questionId]) {
+                    controller.questionStates[questionId].hasAdvanced = true;
+                }
+                
+                // clear all timers
+                controller.clearAllTimers();
+            });
+            
+            // first timer - wait 5 seconds to show the button
+            var that = this;
+            this.activeTimers[questionId + "_show"] = setTimeout(function() {
+                // only proceed if this is still the active page
+                if (that.activePage !== questionId) {
+                    console.log("[Controller] Question " + questionId + " no longer active, aborting show button");
+                    return;
+                }
+                
+                // don't proceed if this page has already advanced
+                if (that.questionStates[questionId] && that.questionStates[questionId].hasAdvanced) {
+                    console.log("[Controller] Question " + questionId + " already advanced, aborting show button");
+                    return;
+                }
+                
+                questionAPI.showNextButton();
+                console.log("[Controller] Next button shown for question: " + questionId);
+                
+                // second timer - wait 3 more seconds to auto-advance
+                that.activeTimers[questionId + "_advance"] = setTimeout(function() {
+                    // check this is still the active page
+                    if (that.activePage !== questionId) {
+                        console.log("[Controller] Question " + questionId + " no longer active, aborting auto-advance");
+                        return;
+                    }
+                    
+                    // don't proceed if this page has already advanced
+                    if (that.questionStates[questionId] && that.questionStates[questionId].hasAdvanced) {
+                        console.log("[Controller] Question " + questionId + " already advanced, aborting auto-advance");
+                        return;
+                    }
+                    
+                    // don't advance if there's been a recent transition
+                    var timeSinceTransition = new Date().getTime() - that.lastTransitionTime;
+                    if (timeSinceTransition < 1000) {
+                        console.log("[Controller] Recent transition detected (" + timeSinceTransition + "ms ago), aborting auto-advance");
+                        return;
+                    }
+                    
+                    that.advanceFromQuestion(questionId);
+                }, 3000);
+            }, 5000);
+        },
+        
+        // advance from a question
+        advanceFromQuestion: function(questionId) {
+            // verify all conditions before advancing - just in case lol
+            if (!this.questionStates[questionId]) {
+                console.log("[Controller] Question " + questionId + " not active, aborting advance");
+                return;
+            }
+            
+            if (this.questionStates[questionId].hasAdvanced) {
+                console.log("[Controller] Question " + questionId + " already advanced, aborting duplicate advance");
+                return;
+            }
+            
+            if (this.activePage !== questionId) {
+                console.log("[Controller] Question " + questionId + " is not the active page, aborting advance");
+                return;
+            }
+            
+            console.log("[Controller] Auto-advancing from question: " + questionId);
+            this.questionStates[questionId].hasAdvanced = true;
+            
+            // API stuff from docs
+            this.questionStates[questionId].questionAPI.clickNextButton();
+        },
+        
+        // clear all timers for all questions
+        clearAllTimers: function() {
+            for (var key in this.activeTimers) {
+                if (this.activeTimers.hasOwnProperty(key)) {
+                    clearTimeout(this.activeTimers[key]);
+                    delete this.activeTimers[key];
+                }
+            }
+        },
+        
+        // when a question is unloaded
+        cleanupQuestion: function(questionId) {
+            console.log("[Controller] Cleaning up question: " + questionId);
+            
+            // if this was the active page, mark it as no longer active
+            if (this.activePage === questionId) {
+                this.activePage = null;
+            }
+            
+            // record this transition
+            this.lastTransitionTime = new Date().getTime();
+            
+            // clear all timers to be safe
+            this.clearAllTimers(); 
+            
+            // mark as advanced to prevent any pending stuff
+            if (this.questionStates[questionId]) {
+                this.questionStates[questionId].hasAdvanced = true;
+            }
+            
+            // clean up the question state
+            delete this.questionStates[questionId];
+        }
+    };
+    
+    console.log("[Controller] Global auto-advance controller initialized");
+}
+</script>
