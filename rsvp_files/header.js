@@ -724,13 +724,15 @@ var RSVPExperiment = {
       '<h3 style="font-size: 28px; margin-bottom: 15px; color: black;">' + RSVPConfig.freeRecallTitle + '</h3>' +
       '<p style="font-size: 20px; margin-bottom: 15px; color: black;">' + RSVPConfig.freeRecallPrompt + '</p>' +
       '<textarea id="recall-textarea-' + this.questionID + '" style="width: 100%; height: 120px; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; resize: vertical;"></textarea>' +
+      '<div id="error-message-' + this.questionID + '" style="color: red; font-size: 16px; margin-top: 10px; display: none;">Please type your recall of the sentence before continuing.</div>' +
       '<button id="submit-button-' + this.questionID + '" style="margin-top: 15px; padding: 10px 20px; background-color: #2196F3; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 20px;">' + RSVPConfig.submitButtonText + '</button>' +
       '</div>';
     
     var self = this;
     var recallTextarea = document.getElementById('recall-textarea-' + this.questionID);
     var submitButton = document.getElementById('submit-button-' + this.questionID);
-    
+    var errorMessageElement = document.getElementById('error-message-' + this.questionID);
+
     // focus on the textarea
     if (recallTextarea) {
       setTimeout(function() {
@@ -741,6 +743,22 @@ var RSVPExperiment = {
     submitButton.onclick = function() {
       // get recall text
       self.userRecall = recallTextarea.value.trim();
+
+      // validate
+      if (self.userRecall === "") {
+        // show error message
+        errorMessageElement.style.display = "block";
+      
+        // highlight textarea
+        recallTextarea.style.borderColor = "#FF5252";
+        recallTextarea.style.boxShadow = "0 0 5px rgba(255, 82, 82, 0.5)";
+      
+        // focus back on textarea
+        recallTextarea.focus();
+      
+        return false;
+      }
+
       self.log("user recall: " + self.userRecall);
       
       // save data to embedded data
@@ -749,6 +767,15 @@ var RSVPExperiment = {
       // move to next question
       self.proceedToNextQuestion();
     };
+
+    // add event listener to hide error message when user types
+    recallTextarea.addEventListener('input', function() {
+        if (this.value.trim() !== "") {
+            errorMessageElement.style.display = "none";
+            this.style.borderColor = "#ccc";
+            this.style.boxShadow = "none";
+        }
+      });
   },
 
   hideTextInputField: function() {
@@ -882,7 +909,13 @@ saveResults: function() {
     this.log("proceeding to next question");
     this.state = "end";
     
-    // show the next button and click it
+    // Hide the entire RSVP container to prevent partial screen visibility
+    if (this.container) {
+      this.container.style.visibility = "hidden";
+      this.log("RSVP container hidden for smooth transition");
+    }
+    
+    // Show the next button and click it
     this.qthis.showNextButton();
     this.qthis.clickNextButton();
   },
