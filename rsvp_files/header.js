@@ -7,7 +7,7 @@ var RSVPConfig = {
   // RSVP timing (all in ms)
   wordDuration: 200,           // Each word displays for 200ms 
   wordGap: 40,                 // 40ms gap between words
-  asterisksDuration: 200,      // fixation at start
+  asterisksDuration: 300,      // fixation at start
   blankDuration: 100,          // blank screen before words
   maskDuration: 100,           // #### mask after words
   digitsDuration: 533,         // how long to show digits
@@ -16,10 +16,10 @@ var RSVPConfig = {
   
   // instruction texts
   instructionTitle: "RSVP Test",
-  instructionText1: "You will see a sentence presented one word at a time in the center of the screen.",
+  instructionText1: "You will see a headline presented one word at a time in the center of the screen.",
   instructionText2: "Each word will appear for a brief moment before the next word appears.",
-  instructionText3: "After reading the entire sentence, you'll complete a digits task",
-  instructionText4: "Finally, you'll be asked to re-type the sentence as best you can.",
+  instructionText3: "After reading the entire headline, you'll complete a digits task",
+  instructionText4: "Finally, you'll be asked to re-type the headline as best you can.",
   fullscreenInstructionText: "This experiment requires full-screen mode. Please click the button below to enter full-screen mode.",
   fullscreenManualText: "You can also press F11 on your keyboard to enter full-screen mode.",
   fullscreenButtonText: "Enter Full-Screen Mode",
@@ -27,15 +27,15 @@ var RSVPConfig = {
   returnToFullscreenText: "Return to Full-Screen",
   startButtonText: "Click to Start",
   readyText: "Ready?",
-  confirmReadyText: "Click to move to next sentence:",
+  confirmReadyText: "Click to move to next headline:",
   confirmReadyButtonText: "Continue",
   
   // question prompts
   digitQuestionText: "Was the word \"{spelled}\" among the digits you saw?",
   yesButtonText: "Yes",
   noButtonText: "No",
-  freeRecallTitle: "Free Recall",
-  freeRecallPrompt: "Please type the sentence you saw as exactly as you can:",
+  freeRecallTitle: "Recall",
+  freeRecallPrompt: "Please type the headline you saw as exactly as you can:",
   submitButtonText: "Submit",
   continueText: "Continue",
   
@@ -149,7 +149,7 @@ var RSVPExperiment = {
       this.showFullscreenPrompt();
     }
     
-    this.log("RSVP initialized for question " + this.questionID + " with sentence: " + this.sentence);
+    this.log("RSVP initialized for question " + this.questionID + " with headline: " + this.sentence);
   },
   
   // setup the UI elements
@@ -169,13 +169,23 @@ var RSVPExperiment = {
     this.container.style.fontSize = RSVPConfig.fontSize;
     this.container.style.fontFamily = "monospace";
     this.container.style.fontWeight = "bold";
-    this.container.style.margin = "40px 0";
+    // this.container.style.margin = "40px 0";
     // disable text selection
+
     this.container.style.webkitUserSelect = "none";
     this.container.style.msUserSelect = "none";
     this.container.style.userSelect = "none";
     this.container.style.webkitTouchCallout = "none";
     this.qthis.getQuestionContainer().appendChild(this.container);
+
+    // this block vertically center the container
+    var questionContainer = this.qthis.getQuestionContainer();
+    questionContainer.style.position = "relative";
+    questionContainer.style.minHeight = "70vh"; // min height
+    this.container.style.position = "absolute";
+    this.container.style.top = "50%";
+    this.container.style.left = "50%";
+    this.container.style.transform = "translate(-50%, -50%)";
     
     // create debug panel
     this.debug = document.createElement("div");
@@ -351,8 +361,21 @@ var RSVPExperiment = {
   
   // generate random digits for the distractor task
   generateDistractorDigits: function() {
-    // shuffle digits array
-    var shuffled = [...this.digits].sort(() => 0.5 - Math.random());
+    // Fisher-Yates shuffle for proper randomization
+    function shuffle(array) {
+      var currentIndex = array.length, temporaryValue, randomIndex;
+      while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+      return array;
+    }
+    
+    // Create a copy and shuffle it properly
+    var shuffled = shuffle([...this.digits]);
     
     // take first 5 for display
     this.displayedDigits = shuffled.slice(0, 5);
@@ -718,13 +741,17 @@ var RSVPExperiment = {
   showFreeRecall: function() {
     this.log("showing free recall question");
     this.state = "free_recall";
+
+    var timeRemaining = RSVPConfig.recallTimerDuration || 60;
+    var timerInterval = null;
     
     this.container.innerHTML = 
       '<div style="text-align: center; max-width: 600px;">' +
       '<h3 style="font-size: 28px; margin-bottom: 15px; color: black;">' + RSVPConfig.freeRecallTitle + '</h3>' +
       '<p style="font-size: 20px; margin-bottom: 15px; color: black;">' + RSVPConfig.freeRecallPrompt + '</p>' +
+      '<div id="timer-display-' + this.questionID + '" style="font-size: 18px; color: #2196F3; margin-bottom: 10px;">Time remaining: ' + timeRemaining + ' seconds</div>' +
       '<textarea id="recall-textarea-' + this.questionID + '" style="width: 100%; height: 120px; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; resize: vertical;"></textarea>' +
-      '<div id="error-message-' + this.questionID + '" style="color: red; font-size: 16px; margin-top: 10px; display: none;">Please type your recall of the sentence before continuing.</div>' +
+      '<div id="error-message-' + this.questionID + '" style="color: red; font-size: 16px; margin-top: 10px; display: none;">Please type your recall of the headline before continuing.</div>' +
       '<button id="submit-button-' + this.questionID + '" style="margin-top: 15px; padding: 10px 20px; background-color: #2196F3; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 20px;">' + RSVPConfig.submitButtonText + '</button>' +
       '</div>';
     
@@ -732,6 +759,34 @@ var RSVPExperiment = {
     var recallTextarea = document.getElementById('recall-textarea-' + this.questionID);
     var submitButton = document.getElementById('submit-button-' + this.questionID);
     var errorMessageElement = document.getElementById('error-message-' + this.questionID);
+    var timerDisplay = document.getElementById('timer-display-' + this.questionID);
+
+    function updateTimer() {
+      timeRemaining--;
+      timerDisplay.textContent = 'Time remaining: ' + timeRemaining + ' seconds';
+      
+      if (timeRemaining <= 0) {
+        clearInterval(timerInterval);
+        // time finishes
+        recallTextarea.style.display = 'none';
+        submitButton.style.display = 'none';
+        errorMessageElement.style.display = 'none';
+        
+        timerDisplay.innerHTML = 
+          '<div style="color: red; font-size: 20px; margin: 20px 0;">Time has run out. Click to proceed.</div>' +
+          '<button id="timeout-continue-' + self.questionID + '" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 20px;">Continue</button>';
+        
+        setTimeout(function() {
+          document.getElementById('timeout-continue-' + self.questionID).onclick = function() {
+            self.userRecall = recallTextarea.value.trim() || "TIME_OUT";
+            self.saveResults();
+            self.proceedToNextQuestion();
+          };
+        }, 100);
+      }
+    }
+
+    timerInterval = setInterval(updateTimer, 1000);
 
     // focus on the textarea
     if (recallTextarea) {
