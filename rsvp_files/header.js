@@ -179,14 +179,13 @@ var RSVPExperiment = {
     this.qthis.getQuestionContainer().appendChild(this.container);
 
     // this block vertically center the container
-    var questionContainer = this.qthis.getQuestionContainer();
-    questionContainer.style.position = "relative";
-    questionContainer.style.minHeight = "70vh"; // min height
-    this.container.style.position = "absolute";
-    this.container.style.top = "50%";
-    this.container.style.left = "50%";
-    this.container.style.transform = "translate(-50%, -50%)";
-    
+    const parent = this.qthis.getQuestionContainer();
+    parent.style.display = "flex";
+    parent.style.flexDirection = "column";
+    parent.style.alignItems = "center";      // horizontal centering
+    parent.style.justifyContent = "center";  // vertical centering
+    parent.style.minHeight = "70vh";        // occupy full height
+
     // create debug panel
     this.debug = document.createElement("div");
     this.debug.id = "debug-area-" + this.questionID;
