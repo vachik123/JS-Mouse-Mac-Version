@@ -358,9 +358,8 @@ var RSVPExperiment = {
     }
   },
   
-  // generate random digits for the distractor task
   generateDistractorDigits: function() {
-    // Fisher-Yates shuffle for proper randomization
+    // fisher-yates shuffle algo
     function shuffle(array) {
       var currentIndex = array.length, temporaryValue, randomIndex;
       while (currentIndex !== 0) {
@@ -373,7 +372,7 @@ var RSVPExperiment = {
       return array;
     }
     
-    // Create a copy and shuffle it properly
+    // create copy and shuffle
     var shuffled = shuffle([...this.digits]);
     
     // take first 5 for display
